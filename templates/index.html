@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Browse our curated collection of everyday essentials and modern favourites.">
+    <title>Curio — Product Catalogue</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header class="site-header">
+    <div class="container header-inner">
+        <a class="brand" href="/" aria-label="Curio home">
+            <span class="brand-mark">C</span> curio<span class="brand-dot">.</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Main navigation">
+            <a class="nav-link active" href="#products">Shop</a>
+            <a class="nav-link" href="#about">About</a>
+        </nav>
+
+        <a class="header-cta" href="#products">
+            Explore collection <span aria-hidden="true">↗</span>
+        </a>
+    </div>
+</header>
+
+<main>
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-copy">
+                <p class="eyebrow">
+                    <span class="eyebrow-line"></span>
+                    THE EVERYDAY EDIT
+                </p>
+
+                <h1>Good things.<br><span>Thoughtfully</span> chosen.</h1>
+
+                <p class="hero-description">
+                    Discover useful favourites, timeless essentials, and little
+                    upgrades that make everyday life feel better.
+                </p>
+
+                <a class="primary-button" href="#products">
+                    Explore products <span aria-hidden="true">↓</span>
+                </a>
+
+                <div class="hero-note">
+                    <span class="note-star">✳</span>
+                    <span>Curated for your everyday</span>
+                </div>
+            </div>
+
+            <div class="hero-art" aria-label="Decorative product showcase">
+                <div class="art-orbit orbit-one"></div>
+                <div class="art-orbit orbit-two"></div>
+                <div class="art-sun"></div>
+                <div class="art-card art-card-back">
+                    <span>LESS, BUT<br>BETTER.</span>
+                </div>
+
+                <div class="art-product">
+                    <div class="product-bottle-cap"></div>
+                    <div class="product-bottle">
+                        <span>CURIO<br><small>DAILY OBJECTS</small></span>
+                    </div>
+                    <div class="product-shadow"></div>
+                </div>
+
+                <div class="art-caption">
+                    <span class="caption-dot"></span>
+                    A collection of good finds
+                </div>
+
+                <div class="art-sticker">
+                    MADE FOR<br>YOUR DAY <span>✳</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="catalogue-section" id="products">
+        <div class="container">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">THE COLLECTION</p>
+                    <h2>Find your next favourite<span>.</span></h2>
+                    <p class="section-description">
+                        A few good things, all in one place.
+                    </p>
+                </div>
+
+                <div class="catalogue-count">
+                    <span class="count-dot"></span>
+                    OUR PICKS
+                </div>
+            </div>
+
+            {% if products %}
+            <div class="product-grid">
+
+                {% for product in products %}
+                <article class="product-card">
+
+                    <div class="product-image-wrap">
+                        {% if product.image %}
+                        <img
+                            class="product-image"
+                            src="{{ product.image }}"
+                            alt="{{ product.name }}"
+                            loading="lazy"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                        >
+                        <div class="product-image-placeholder" style="display:none;">
+                            <span>{{ product.name[0] if product.name else 'P' }}</span>
+                        </div>
+                        {% else %}
+                        <div class="product-image-placeholder">
+                            <span>{{ product.name[0] if product.name else 'P' }}</span>
+                        </div>
+                        {% endif %}
+
+                        {% if product.category %}
+                        <span class="product-category">{{ product.category }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-title-row">
+                            <h3>{{ product.name }}</h3>
+                            <p class="product-price">
+                                ₹{{ "%.2f"|format(product.price|float) }}
+                            </p>
+                        </div>
+
+                        <p class="product-description">
+                            {{ product.description }}
+                        </p>
+
+                        <a class="product-link"
+                           href="{{ url_for('product_page', product_id=product.id) }}">
+                            View details <span aria-hidden="true">↗</span>
+                        </a>
+                    </div>
+
+                </article>
+                {% endfor %}
+
+            </div>
+            {% else %}
+            <div class="empty-state">
+                <span class="empty-icon">✳</span>
+                <h3>Your catalogue is getting ready.</h3>
+                <p>Add products in the backend module and they will appear here automatically.</p>
+            </div>
+            {% endif %}
+
+        </div>
+    </section>
+
+    <section class="about-strip" id="about">
+        <div class="container about-inner">
+            <span class="about-icon">✳</span>
+
+            <div>
+                <p class="eyebrow">A LITTLE ABOUT CURIO</p>
+                <h2>Useful things. Clear choices. Everyday joy.</h2>
+            </div>
+
+            <p class="about-copy">
+                A simple product catalogue built to help you explore
+                the things you love, without the clutter.
+            </p>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <a class="brand footer-brand" href="/">
+            <span class="brand-mark">C</span> curio<span class="brand-dot">.</span>
+        </a>
+
+        <p>Thoughtfully chosen, for everyday living.</p>
+        <span class="footer-credit">Student project · Product catalogue</span>
+    </div>
+</footer>
+
+</body>
+</html>
